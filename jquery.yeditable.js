@@ -1,6 +1,6 @@
 /*
  * jQuery yEditable Plugin 0.0.1
- * https://github.com/yinyongcom666/yeditable
+ * https://github.com/yanni4night/yeditable
  *
  * Copyright 2013,yinyong
  * Email:yanni4night@gmail.com
