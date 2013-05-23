@@ -16,20 +16,7 @@
 			inputAutoSize: true,
 			inputAutoClass: false,
 			styleClass: '',
-			inputStyle: 'input', //input or textarea
-			sync: false,
-			syncMethod: 'get',
-			syncUrl: '',
-			composeSyncParam: function(oldValue, newValue) {
-				return "data=" + newValue;
-			},
-			syncSucceed: function(reponseData) {
-				return true;
-			},
-			onSyncFailed: function() {},
-			convert: function(oldValue, newValue) {
-				return newValue;
-			},
+			inputText: 'input', //input or textarea
 			validate: function(oldValue, newValue) {
 				return true;
 			},

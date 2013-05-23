@@ -30,23 +30,9 @@ inputAutoClass: true/false =Whether the input should have the same class as the 
 
 styleClass: ''=>If inputAutoClass is set to false,these one or more classes will be added to input.
 
-inputStyle: 'input'/'textarea' =>The input can act as a input with type=text,or a textarea.Note that Line break will act as a white space.
+inputText: 'input'/'textarea' =>The input can act as a input with type=text,or a textarea.Note that Line break will act as a white space.
 
-sync: true/false =>Whether the new value should be sent to server.
-
-syncMethod: 'get'/'post' => HTTP method when communicating to server.
-
-syncUrl:'' => The server URL that the new value will be sent to.
-
-composeSyncParam: function(){} => Get the parameters of sync.
-
-syncSucceed:function(reponseData){} =>Judge whether the response data means succeed of failed.
-
-onSyncFailed: function(){}=>When sync failed.
-
-convert:function(oldValue, newValue){}=>If the new value need convert.
-
-validate: function(newValue,oldValue){}=>Validate the new value,false means wrong value and the text is still editable.The new value may be converted.
+validate: function(newValue,oldValue){}=>Validate the new value,false means wrong value and the text is still editable.
 
 onBeforeEdit: function(){oldValue}=>Before the edit.Return false means this text cannot be editable.
 
