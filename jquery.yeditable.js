@@ -16,66 +16,45 @@
 			inputAutoSize: true,
 			inputAutoClass: false,
 			styleClass: '',
-			inputText: 'input', //input or textarea
+			inputType: 'input', //input or textarea
 			validate: function(oldValue, newValue) {
 				return true;
 			},
+			onEditSucceed:function(oldValue,newValue){},
+			onEditFailed:function(oldValue,newValue){},
 			onBeforeEdit: function(oldValue) {
 				return true;
 			},
 			onAfterEdit: function(oldValue, newValue) {}
-		},e,all,finishEdit,editDone,editBegin;
+		},e,all=$(this),edit,editDone,editBegin;
 
 		config = config || {};
 		for (e in defaultConfig) {
 			_config[e] = config[e] || defaultConfig[e];
 		}
 		//Default input
-		_config.inputStyle = /^(input|textarea)$/i.test(_config.inputStyle) ? _config.inputStyle : 'input';
+		_config.inputType = /^(input|textarea)$/i.test(_config.inputType) ? _config.inputType : 'input';
 
-		all = $(this);
-
-
-		finishEdit = function(editable, hiddenInput, oldValue, newValue) {
-			editable.text(newValue).show();
+		editDone = function(editable, hiddenInput, oldValue, newValue) {
+			editable.show();
 			hiddenInput.hide();
 			//Invoke onAfterEdit
 			_config.onAfterEdit.call(editable, oldValue, newValue);
 		};
 
 
-		editDone = function(editable, hiddenInput) {
-
-			if (!hiddenInput.is(':visible')) return;
-
-			var oldValue = editable.text(),
-				newValue = hiddenInput.val()
-
-				newValue = _config.convert.call(editable, oldValue, newValue);
-			//Invoke onValidate
-			if (!_config.validate.call(editable, oldValue, newValue)) return false;
-
-			if (_config.sync) {
-				$.ajax({
-					url: _config.syncUrl,
-					type: _config.syncMethod,
-					data: _config.composeSyncParam.call(editable, oldValue, newValue),
-					success: function(data) {
-						if (_config.syncSucceed.call(editable, data)) {
-							finishEdit(editable, hiddenInput, oldValue, newValue);
-						} else {
-							this.error();
-						}
-					},
-					error: function() {
-						_config.onSyncFailed.call(editable);
-						finishEdit(editable, hiddenInput, newValue, oldValue);
-					}
-				});
-			} else {
-				finishEdit(editable, hiddenInput, oldValue, newValue);
+		edit = function(editable, hiddenInput) {
+			var newValue=hiddenInput.val(),oldValue=editable.text();
+			if(_config.validate.call(editable,oldValue,newValue))
+			{
+				editable.text(newValue);
+				_config.onEditSucceed.call(editable,oldValue,newValue);
+			}else
+			{
+				_config.onEditFailed.call(editable,oldValue,newValue);
 			}
 
+			editDone(editable,hiddenInput,oldValue,newValue);
 		};
 
 		editBegin = function(editable, hiddenInput) {
@@ -87,10 +66,9 @@
 
 		};
 
-
 		$.each(all, function(i, v) {
 
-			var hiddenInput = $('<' + _config.inputStyle + '/>').attr({
+			var hiddenInput = $('<' + _config.inputType + '/>').attr({
 				type: 'text'
 			}).css({
 				display: 'none'
@@ -99,10 +77,10 @@
 
 			hiddenInput.insertBefore(editable);
 			hiddenInput.on('blur', function() {
-				editDone(editable, hiddenInput);
+				edit(editable, hiddenInput);
 			});
-			_config.inputStyle === 'input' && hiddenInput.on('keypress', function(e) {
-				(e.keyCode == 13) && editDone(editable, hiddenInput);
+			_config.inputType === 'input' && hiddenInput.on('keypress', function(e) {
+				(e.keyCode == 13) && edit(editable, hiddenInput);
 			});
 
 			editable.on('dblclick', function() {

@@ -1,21 +1,12 @@
-	$('.editable').yeditable({
+	$('#editable-1').yeditable({
 		inputAutoSize: true,
 		inputAutoClass: true,
-		inputStyle: 'textarea',
-		sync: 0,
-		syncMethod: 'get',
-		syncUrl: '/',
-		syncSucceed: function(reponseData) {
-			return 1;
-		},
-		onSyncFailed: function() {
-			console.log('shit');
-		},
-		onValidate: function(oldValue, newValue) {
-			return newValue;
-		},
-		onBeforeEdit: function(oldValue) {
-			return true;
-		},
-		onAfterEdit: function(oldValue, newValue) {}
+	});	$('#editable-2').yeditable({
+		inputAutoSize: true,
+		inputAutoClass: true,
+		validate:function(oldValue,newValue){return newValue.length>10;}
+	});	$('#editable-3').yeditable({
+		inputAutoSize: true,
+		inputAutoClass: true,
+		inputType:'textarea'
 	});

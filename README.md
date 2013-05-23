@@ -34,6 +34,10 @@ inputText: 'input'/'textarea' =>The input can act as a input with type=text,or a
 
 validate: function(newValue,oldValue){}=>Validate the new value,false means wrong value and the text is still editable.
 
+onEditSucceed:function(oldValue ,newValue){}=>invoke when validate pass
+
+onEditFailed:function(oldValue ,newValue){}=>invoke when validate failed
+
 onBeforeEdit: function(){oldValue}=>Before the edit.Return false means this text cannot be editable.
 
 onAfterEdit: function(){oldValue, newValue}=>After edited successfully.If sync is set true,this will only be invoke sync successfully.
