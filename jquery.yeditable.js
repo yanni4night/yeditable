@@ -34,7 +34,15 @@
 		}
 		//Default input
 		_config.inputType = /^(input|textarea)$/i.test(_config.inputType) ? _config.inputType : 'input';
-
+		/**
+		 * Complete the editting,reshow the editable element and
+		 * call the onAfterEdit function.
+		 * @param  {[jQuery object]} editable    [The editable element]
+		 * @param  {[jQuery object]} hiddenInput [The hidden input element]
+		 * @param  {[String]} oldValue    [Old string value]
+		 * @param  {[String]} newValue    [New string value]
+		 * @return {[undefined]}             
+		 */
 		editDone = function(editable, hiddenInput, oldValue, newValue) {
 			editable.show();
 			hiddenInput.hide();
@@ -42,7 +50,12 @@
 			_config.onAfterEdit.call(editable, oldValue, newValue);
 		};
 
-
+		/**
+		 * validate the new value.
+		 * @param  {[type]} editable    [description]
+		 * @param  {[type]} hiddenInput [description]
+		 * @return {[type]}             [description]
+		 */
 		edit = function(editable, hiddenInput) {
 			var newValue=hiddenInput.val(),oldValue=editable.text();
 			if(_config.validate.call(editable,oldValue,newValue))
@@ -57,6 +70,12 @@
 			editDone(editable,hiddenInput,oldValue,newValue);
 		};
 
+		/**
+		 * Hide the editable element and show the hidden input element.
+		 * @param  {[type]} editable    [description]
+		 * @param  {[type]} hiddenInput [description]
+		 * @return {[type]}             [description]
+		 */
 		editBegin = function(editable, hiddenInput) {
 			hiddenInput.val(editable.hide().text()).addClass(_config.inputAutoClass ? editable.attr('class') : styleClass).show().focus();
 			_config.inputAutoSize && hiddenInput.css({
