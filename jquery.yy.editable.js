@@ -77,7 +77,7 @@
 		 * @return {[type]}             [description]
 		 */
 		editBegin = function(editable, hiddenInput) {
-			hiddenInput.val(editable.hide().text()).addClass(_config.inputAutoClass ? editable.attr('class') : styleClass).show().focus();
+			hiddenInput.val(editable.hide().text()).addClass(_config.inputAutoClass ? editable.attr('class') : _config.styleClass).show().focus();
 			_config.inputAutoSize && hiddenInput.css({
 				width: editable.width() + "px",
 				height: editable.height() + "px"
